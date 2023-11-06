@@ -116,6 +116,14 @@
 
     </dependencies>
 
+    <scm>
+        <connection>scm:git:https://github.com/the-eagle-eye-project/eagle-wings.git</connection>
+        <developerConnection>scm:git:https://github.com/the-eagle-eye-project/eagle-wings.git</developerConnection>
+        <url>https://github.com/the-eagle-eye-project/eagle-wings</url>
+        <tag>HEAD</tag>
+    </scm>
+
+
 
     <build>
         <plugins>
