@@ -24,9 +24,20 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+      - name: Set Git Author Identity
+        run: |
+          git config user.name "John Martinez"
+          git config user.email "jmartinez5120@gmail.com"
+      - name: Commit and Push Git Config Changes
+        run: |
+          git add .
+          git commit -m "Set Git author identity"
+          git push
+      - name: Set Git Author Identity
+        run: |
+          git config user.name "${{ secrets.GITHUB_ACTOR }}"
+          git config user.email "${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com"
 
-#      - name: Set Git Author Identity
-#        run: |
-#          git config user.name "${{ secrets.GITHUB_ACTOR }}"
-#          git config user.email "${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com"
+
+
 
