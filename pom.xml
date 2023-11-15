@@ -5,7 +5,7 @@
 
     <groupId>com.theeagleeyeproject</groupId>
     <artifactId>eagle-wings</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>Eagle Wings</name>
     <description>This repository contains all the utilities, handlers and libraries that works across all the other
         repositories to support the different capabilities.
@@ -35,6 +35,12 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>6.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- Unit Test -->
@@ -113,7 +119,6 @@
             <version>3.13.0</version> <!-- Use the latest version available -->
         </dependency>
 
-
     </dependencies>
 
     <scm>
@@ -126,11 +131,6 @@
 
     <build>
         <plugins>
-            <!--            <plugin>
-                            <groupId>org.graalvm.buildtools</groupId>
-                            <artifactId>native-maven-plugin</artifactId>
-                        </plugin>-->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
@@ -185,7 +185,7 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
+            <name>GitHub The Eagle Eye Project Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/the-eagle-eye-project/eagle-wings</url>
         </repository>
     </distributionManagement>
