@@ -1,11 +1,11 @@
 package com.theeagleeyeproject.eaglewings.utility;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 class JwtUtilTest {
 
@@ -13,23 +13,29 @@ class JwtUtilTest {
 
     private final String secret = "someKeyVal;ljpi9uj09j-okue1-20894-08";
 
-    @Test
-    void generateToken() {
+    private String newJwt;
+
+    @BeforeEach
+    void init() {
         Map<String, Object> claims = new HashMap<>();
         claims.put("claim_key1", "claim_value1");
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.setSecret(secret);
         jwtUtil.setExpirationHours(24L);
-        String jwt = jwtUtil.generateToken(UUID.randomUUID().toString(), claims);
+        newJwt = jwtUtil.generateToken("a7e91fab-f1a2-4345-b100-b16cfbc01b96", claims);
+        System.out.println(newJwt);
+    }
 
-        Assertions.assertNotNull(jwt, "Jwt came back from the method NULL");
+    @Test
+    void generateToken() {
+        Assertions.assertNotNull(newJwt, "Jwt came back from the method NULL");
     }
 
     @Test
     void extractClaim() {
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.setSecret(secret);
-        Map<String, Object> claims = jwtUtil.extractClaims(jwt);
+        Map<String, Object> claims = jwtUtil.extractClaims(newJwt);
         Assertions.assertEquals("claim_value1", claims.get("claim_key1"));
     }
 
