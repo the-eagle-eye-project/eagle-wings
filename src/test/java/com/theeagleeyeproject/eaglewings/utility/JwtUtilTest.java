@@ -36,7 +36,7 @@ class JwtUtilTest {
 
     @Test
     void isTokenValid() {
-        String invalidJwt = "yJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGY0NDY2Mi00ZTk2LTQ2MjEtOTQyYy05ZDM5OTUyZWVhZjAiLCJpYXQiOjE3MDE5MDYzMTMsImV4cCI6MTcwMTk5MjcxMywiY2xhaW1fa2V5MSI6ImNsYWltX3ZhbHVlMSJ9.dCObXlU_MEO7QZYHtTeO7MBy74koWk1DEuJaXtdRk-A";
+        String invalidJwt = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGY0NDY2Mi00ZTk2LTQ2MjEtOTQyYy05ZDM5OTUyZWVhZjAiLCJpYXQiOjE3MDE5MDYzMTMsImV4cCI6MTcwMTk5MjcxMywiY2xhaW1fa2V5MSI6ImNsYWltX3ZhbHVlMSJ9.dCObXlU_MEO7QZYHtTeO7MBy74koWk1DEuJaXtdRk-A";
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.setSecret(secret);
         boolean invalidJwtResult = jwtUtil.isTokenValid(invalidJwt);
