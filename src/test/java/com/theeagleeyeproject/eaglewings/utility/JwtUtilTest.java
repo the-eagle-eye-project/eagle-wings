@@ -22,7 +22,7 @@ class JwtUtilTest {
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.setSecret(secret);
         jwtUtil.setExpirationHours(24L);
-        newJwt = jwtUtil.generateToken("a7e91fab-f1a2-4345-b100-b16cfbc01b96", claims);
+        newJwt = jwtUtil.generateToken("eb336330-89ad-4791-8037-f649ac77bfd4", claims);
         System.out.println(newJwt);
     }
 
