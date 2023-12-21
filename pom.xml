@@ -5,7 +5,7 @@
 
     <groupId>com.theeagleeyeproject</groupId>
     <artifactId>eagle-wings</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.7</version>
     <name>Eagle Wings</name>
     <description>This repository contains all the utilities, handlers and libraries that works across all the other
         repositories to support the different capabilities.
@@ -128,6 +128,11 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.12.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>10.1.15</version>
         </dependency>
 
     </dependencies>
