@@ -18,11 +18,11 @@ class JwtUtilTest {
     @BeforeEach
     void init() {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("claim_key1", "claim_value1");
+        claims.put("role", "user");
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.setSecret(secret);
         jwtUtil.setExpirationHours(24L);
-        newJwt = jwtUtil.generateToken("eb336330-89ad-4791-8037-f649ac77bfd4", claims);
+        newJwt = jwtUtil.generateToken("8400bc7c-e6c8-42da-bd8e-34fbbe90c3d6", claims);
         System.out.println(newJwt);
     }
 
@@ -36,7 +36,7 @@ class JwtUtilTest {
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.setSecret(secret);
         Map<String, Object> claims = jwtUtil.extractClaims(newJwt);
-        Assertions.assertEquals("claim_value1", claims.get("claim_key1"));
+        Assertions.assertEquals("user", claims.get("role"));
     }
 
 
