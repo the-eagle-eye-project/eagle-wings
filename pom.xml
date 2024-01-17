@@ -5,7 +5,7 @@
 
     <groupId>com.theeagleeyeproject</groupId>
     <artifactId>eagle-wings</artifactId>
-    <version>0.0.7</version>
+    <version>0.0.8</version>
     <name>Eagle Wings</name>
     <description>This repository contains all the utilities, handlers and libraries that works across all the other
         repositories to support the different capabilities.
