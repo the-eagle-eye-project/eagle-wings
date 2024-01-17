@@ -1,10 +1,10 @@
 package com.theeagleeyeproject.eaglewings.utility;
 
+import com.theeagleeyeproject.eaglewings.security.Role;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 class JwtUtilTest {
@@ -17,12 +17,10 @@ class JwtUtilTest {
 
     @BeforeEach
     void init() {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("role", "user");
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.setSecret(secret);
         jwtUtil.setExpirationHours(24L);
-        newJwt = jwtUtil.generateToken("8400bc7c-e6c8-42da-bd8e-34fbbe90c3d6", claims);
+        newJwt = jwtUtil.generateToken("164031b4-da97-4da9-aa10-683d01bb97e1", Role.USER);
         System.out.println(newJwt);
     }
 
@@ -36,7 +34,7 @@ class JwtUtilTest {
         JwtUtil jwtUtil = new JwtUtil();
         jwtUtil.setSecret(secret);
         Map<String, Object> claims = jwtUtil.extractClaims(newJwt);
-        Assertions.assertEquals("user", claims.get("role"));
+        Assertions.assertEquals(Role.USER.toString(), claims.get("role"));
     }
 
 

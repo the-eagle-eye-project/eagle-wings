@@ -1,17 +1,12 @@
 package com.theeagleeyeproject.eaglewings.utility;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.theeagleeyeproject.eaglewings.security.Role;
+import io.jsonwebtoken.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -37,25 +32,25 @@ public class JwtUtil {
      * Used to generate a new JWT for authentication purposes.
      *
      * @param userId UUID that belongs to a specific user.
-     * @param claims custom attributes added to the JWT for processing.
+     * @param role   account's role ENUM that is used to be added to the JWT
      * @return a token
      */
-    public String generateToken(String userId, Map<String, Object> claims) {
+    public String generateToken(String userId, Role role) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expirationDateTime = now.plusHours(expirationHours);
 
-        Date issuedAt = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
-        Date expiration = Date.from(expirationDateTime.atZone(ZoneId.systemDefault()).toInstant());
-
-        Key signingKey = new SecretKeySpec(secret.getBytes(), SignatureAlgorithm.HS256.getJcaName());
-
+        // Builds the JWT instance.
         JwtBuilder jwt = Jwts.builder()
                 .subject(userId)
-                .issuedAt(issuedAt)
-                .expiration(expiration)
-                .signWith(signingKey);
+                .issuedAt(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()))
+                .expiration(Date.from(expirationDateTime.atZone(ZoneId.systemDefault()).toInstant()))
+                .signWith(new SecretKeySpec(secret.getBytes(), SignatureAlgorithm.HS256.getJcaName()));
 
-        for (Map.Entry<String, Object> claim : claims.entrySet()) {
+        // Creates the user's role to be added to the JWT.
+        Map<String, Role> roleClaim = createRoleClaim(role);
+
+        // Adds the role to the JWT.
+        for (Map.Entry<String, Role> claim : roleClaim.entrySet()) {
             jwt.claim(claim.getKey(), claim.getValue());
         }
 
@@ -73,9 +68,8 @@ public class JwtUtil {
                 .setSigningKey(secret.getBytes())
                 .build()
                 .parseSignedClaims(token);
-
-        Claims claims = claimsJws.getPayload();
-        return new HashMap<>(claims);
+        
+        return new HashMap<>(claimsJws.getPayload());
     }
 
     /**
@@ -95,5 +89,16 @@ public class JwtUtil {
             // Token is either malformed, expired, or signature validation failed
             return false;
         }
+    }
+
+    /**
+     * Create the role claim that is stored in the JWT for App security's policies.
+     *
+     * @return an object of type {@link Map}
+     */
+    private Map<String, Role> createRoleClaim(Role role) {
+        Map<String, Role> claims = new HashMap<>();
+        claims.put("role", role);
+        return claims;
     }
 }
