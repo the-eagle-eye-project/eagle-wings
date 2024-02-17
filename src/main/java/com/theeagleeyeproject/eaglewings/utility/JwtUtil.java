@@ -1,7 +1,12 @@
 package com.theeagleeyeproject.eaglewings.utility;
 
 import com.theeagleeyeproject.eaglewings.security.Role;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -68,7 +73,7 @@ public class JwtUtil {
                 .setSigningKey(secret.getBytes())
                 .build()
                 .parseSignedClaims(token);
-        
+
         return new HashMap<>(claimsJws.getPayload());
     }
 
@@ -79,6 +84,10 @@ public class JwtUtil {
      * @return a boolean value
      */
     public boolean isTokenValid(String token) {
+        // Return false if the Token is blank or null.
+        if (token == null)
+            return false;
+
         try {
             Jwts.parser()
                     .setSigningKey(secret.getBytes())
