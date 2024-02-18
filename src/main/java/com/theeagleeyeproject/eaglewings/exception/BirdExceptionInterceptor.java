@@ -10,7 +10,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  * Controller Advice that manages all Exceptions that happens in the application.
@@ -18,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * @author John Martinez
  */
 @ControllerAdvice
-public class BirdExceptionInterceptor extends ResponseEntityExceptionHandler {
+public class BirdExceptionInterceptor {
 
     /**
      * Exception handler that will handle all custom exceptions thrown by the developer in specific scenarios.
@@ -59,13 +58,11 @@ public class BirdExceptionInterceptor extends ResponseEntityExceptionHandler {
     /**
      * Method that overrides handleMethodArgumentNotValid which is thrown when a Validation fails (Spring @Valid). This is mainly use for Consumer Request validation.
      *
-     * @param ex      Exception message that comes from the validation exception thrown by @Valid
-     * @param headers sent by the consumer used to extract the Transaction Key created in the Spring interceptor preHandle method.
-     * @param status  NOT USED
-     * @param request NOT USED
+     * @param ex Exception message that comes from the validation exception thrown by @Valid
      * @return ResponseEntity object with the ExceptionResponse back to the consumer
      */
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         ExceptionResponse response = new ExceptionResponse(
                 ExceptionCategory.VALIDATION_ERROR.getHttpStatus().value(),
                 ExceptionCategory.VALIDATION_ERROR,
@@ -75,6 +72,7 @@ public class BirdExceptionInterceptor extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(response, response.getExceptionCategory().getHttpStatus());
     }
+
 
     /**
      * Method that overrides handleHttpMessageNotReadable from Object ResponseEntityExceptionHandler, which is used to be thrown when the ENUM validation fails.
